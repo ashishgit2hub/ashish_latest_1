@@ -1,0 +1,11 @@
+- name: Install Repo for nginx epel
+  yum: 
+    name: epel-release 
+    state: present
+
+- name: Install nginx web package
+  yum: 
+    name: nginx 
+    state: installed 
+    update_cache: true
+  notify: restart nginx

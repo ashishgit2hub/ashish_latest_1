@@ -1,0 +1,90 @@
+- name: Define tomcat_home
+  set_fact:
+    tomcat_home: "{{ __tomcat_home }}"
+  when: tomcat_home is not defined
+
+- name: Define tomcat_version
+  set_fact:
+    tomcat_version: "{{ __tomcat_version }}"
+  when:
+    - tomcat_version is not defined
+    - __tomcat_version is defined
+
+- name: Define tomcat_binary_url
+  set_fact:
+    tomcat_binary_url: "{{ __tomcat_binary_url }}"
+  when:
+    - tomcat_binary_url is not defined
+    - __tomcat_binary_url is defined
+
+- name: Define tomcat_target_dir
+  set_fact:
+    tomcat_target_dir: "{{ __tomcat_target_dir }}"
+  when:
+    - tomcat_target_dir is not defined
+    - __tomcat_target_dir is defined
+
+- name: group add
+  group:
+    name: "{{ tomcat_server_group }}"
+  sudo: True
+
+
+- name: user add
+  user:
+    name: "{{ tomcat_server_user }}"
+    group: "{{ tomcat_server_group }}"
+    home: "{{ tomcat_user_home }}"
+    createhome: no
+  sudo: True
+
+- name: download and extract
+  unarchive:
+    src: "{{ tomcat_binary_url }}"
+    dest: "/opt/"
+    remote_src: yes
+  sudo: True
+
+- name: symlink install directory
+  file:
+    src: "{{ tomcat_target_dir }}"
+    path: "{{ tomcat_home }}"
+    state: link
+  sudo: True
+
+- name: change ownership of target installation
+  file:
+    path: "{{ tomcat_target_dir }}"
+    owner: tomcat
+    group: tomcat
+    state: directory
+    recurse: yes
+  sudo: True
+
+- name: change permissions of conf
+  command: sudo chmod 750 /opt/tomcat/conf
+
+- name: systemd
+  template: src=tomcat.service.j2 dest=/etc/systemd/system/tomcat.service
+  notify: restart tomcat
+  sudo: True
+
+- name: restart daemon
+  command: systemctl daemon-reload
+  sudo: True
+
+
+- name: server configuration
+  template:
+    src: server.xml.j2
+    dest: "{{tomcat_home}}/conf/server.xml"
+  notify: restart tomcat
+  sudo: True
+
+- name: start tomcat
+  service:
+    name: "{{tomcat_service_name}}"
+    state: started
+    enabled: yes
+  sudo: True
+

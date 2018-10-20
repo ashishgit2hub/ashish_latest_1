@@ -1,0 +1,16 @@
+- name: Install wget & Unzip package
+  yum: name={{ item }} state=latest
+  with_items:
+    - wget
+    - unzip
+
+- name: downloading and deploying sample war file
+  command: wget https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war -O {{ warRemotePath }}/{{ warName }}
+
+- name: Unzip WAR file
+  unarchive: src={{ warRemotePath }}/{{ warName }} dest=/opt/tomcat/webapps/ROOT/ copy=no mode=0755 owner={{ tomcat_server_user }}  group={{ tomcat_server_group }}
+  sudo: True
+  notify: restart tomcat
+
+- name: Delete remote war file
+  file: path={{ warRemotePath }}/{{ warName }} state=absent

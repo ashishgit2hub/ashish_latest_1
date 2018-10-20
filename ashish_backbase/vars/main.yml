@@ -1,0 +1,14 @@
+##JAVA vars
+download_url: http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz
+download_folder: /opt
+java_name: "{{download_folder}}/jdk1.8.0_191"
+java_archive: "{{download_folder}}/jdk-8u191-linux-x64.tar.gz"
+
+##Tomcat vars
+__tomcat_home: /opt/tomcat
+
+# URL for Tomcat binary to download and related path
+__tomcat_version: 8.5.9
+__tomcat_binary_url:  "https://archive.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+__tomcat_target_dir:  "/opt/apache-tomcat-{{ tomcat_version }}"
+

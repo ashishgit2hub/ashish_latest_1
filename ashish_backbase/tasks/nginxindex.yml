@@ -1,0 +1,16 @@
+- name: "copy nginx.conf file to run nginx on port 8080"
+  template:
+    src: nginx8080.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart nginx
+
+- name: "override existing index.html with simple hello world"
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+    owner: root
+    group: root
+

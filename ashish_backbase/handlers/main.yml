@@ -1,0 +1,31 @@
+---
+# handlers file for ashish_backbase
+- name: restart tomcat
+  service:
+    name: tomcat
+    state: restarted
+    enabled: yes
+  listen: "restart tomcat"
+
+- name: start activemq
+  service: 
+    name: activemq 
+    state: started
+
+- name: stop activemq
+  service: 
+    name: activemq 
+    state: stopped
+
+- name: restart activemq
+  service: 
+    name: activemq 
+    state: restarted
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+  listen: "restart nginx"
+

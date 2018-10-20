@@ -1,0 +1,8 @@
+- name: Checking the entry of Java home in /etc/profile
+  shell: cat /etc/profile | grep JAVA_HOME
+  register: outjava
+  ignore_errors: true
+
+- name: Setting Java Home PATH of all users
+  shell: echo 'export JAVA_HOME=/opt/jdk1.8.0_191' >> /etc/profile; echo 'PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile;
+  when: outjava.rc != 0

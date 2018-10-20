@@ -1,0 +1,6 @@
+- name: role backspace run
+  hosts: localhost
+  become: true 
+  connection: local
+  roles:
+    - ashish_backbase

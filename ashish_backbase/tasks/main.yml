@@ -1,0 +1,22 @@
+---
+# tasks file for ashish_backbase
+##TASK 1##Installing JDK version 8 
+- import_tasks: oraclejdk.yml
+
+##TASK 2##Setting Java Home Path for all the USERS
+- import_tasks: homejava.yml 
+
+## TASK 3##TOMCAT installation from tar
+- import_tasks: tomcat.yml
+
+## TASK 4##War file deployment
+- import_tasks: warfile.yml
+
+## TASK5##Activemq installation from tar
+- import_tasks: activemq.yml
+
+## TASK6##installation of nginx
+- import_tasks: nginx.yml
+
+## TASK7##configuring port 8080 in conf nginx and chnage index.html with simple hello world
+- import_tasks: nginxindex.yml
