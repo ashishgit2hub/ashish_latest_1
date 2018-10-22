@@ -96,11 +96,6 @@ Dependencies
 ansible version -> 2.5 or above
 git rpm package
 
-License
--------
-
-BSD
-
 Author Information
 ------------------
 Ashish Arora, connectashisharora@gmail.com
