@@ -93,8 +93,8 @@ b) Execute the “systemctl status nginx” command, it will show the nginx serv
  
 Dependencies
 ------------
-ansible version -> 2.5 or above
-git rpm package
+1. ansible version -> 2.5 or above
+2. git rpm package
 
 Author Information
 ------------------
